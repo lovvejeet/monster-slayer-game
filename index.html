@@ -36,7 +36,7 @@
         <h3 v-else>It's a draw!</h3>
         <button v-on:click="startGame">Start New Game</button>
       </section>
-      <section id="controls">
+      <section id="controls" v-else>
         <button v-on:click="attackMonster">ATTACK</button>
         <button
           v-on:click="specialAttackMonster"
@@ -49,7 +49,23 @@
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="logMessage in logMessages">
+            <span
+              :class="{'log--player': logMessage.actionBy==='player','log--monster':logMessage.actionBy ==='monster'}"
+              >{{logMessage.actionBy === 'player'? 'Player':'Monster'}}</span
+            >
+            <span v-if="logMessage.actionType==='heal'"
+              >Heals himself for
+              <span class="log--heal">{{logMessage.actionValue}}</span></span
+            >
+            <span
+              >attacks and deals
+              <span class="log--damage">{{logMessage.actionValue}}</span></span
+            >
+            <!-- {{logMessage.actionBy}}-{{logMessage.actionType}}-{{logMessage.actionValue}} -->
+          </li>
+        </ul>
       </section>
     </div>
   </body>
